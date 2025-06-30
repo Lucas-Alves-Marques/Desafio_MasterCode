@@ -1,0 +1,71 @@
+.formLogin {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.formLogin h1 {
+    text-transform: uppercase;
+    margin-bottom: 4vh;
+    font-size: 4vh;
+    letter-spacing: 0.5vh;
+}
+
+.spanMaster {
+    color: rgb(0, 214, 0);
+    text-shadow: 0vh 0vh 1vh rgb(0, 214, 0);
+}
+
+.spanCode {
+    color: rgb(0, 100, 0);
+    text-shadow: 0vh 0vh 1vh rgb(0, 100, 0);
+}
+
+.formLogin input {
+    margin-bottom: 2vh;
+    height: 5vh;
+    width: 40vh;
+    padding-left: 2vh;
+    border: 0.3vh solid rgb(0, 107, 0);
+}
+
+.formLogin button {
+    height: 5vh;
+    width: 100%;
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: rgb(0, 247, 0);
+    border: none;
+    cursor: pointer;
+    font-family: "DM Serif Text", serif;
+    font-size: 1.5vh;
+}
+
+.message {
+    position: absolute;
+    top: 45vh;
+    left: 86vh;
+    display: flex;
+    background-color: rgb(0, 107, 0, 0.9);
+    flex-direction: column;
+    height: 10vh;
+    width: 30vh;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    border: 0.1vh solid white;
+}
+
+.message button {
+    margin-top: 1vh;
+    padding: 0.5vh 2vh;
+    color: black;
+    background-color: rgb(0, 247, 0);
+    border: 0.1vh solid white;
+    cursor: pointer;
+    font-family: "DM Serif Text", serif;
+    font-size: 1.5vh;
+}
