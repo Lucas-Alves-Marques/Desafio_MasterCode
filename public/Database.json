@@ -1,17 +1,74 @@
 {
-    "usuarios": [
+    "users": [
 
         {
-            "nome": "usuario1",
-            "senha": "1234"
+            "name": "João Silva",
+            "password": "1234",
+            "quantityCourses": 25
+
         },
         {
-            "nome": "usuario2",
-            "senha": "5678"
+            "name": "Maria Oliveira",
+            "password": "5678",
+            "quantityCourses": 30
         },
         {
-            "nome": "usuario3",
-            "senha": "9012"
+            "name": "Lucas Santos",
+            "password": "9012",
+            "quantityCourses": 20
+        },
+        {
+            "name": "Ana Costa",
+            "password": "3456",
+            "quantityCourses": 25
+        }
+    ],
+    "services": [
+
+        {
+            "name": "Criação de E-commerce",
+            "quantity": 50
+        },
+        {
+            "name": "App para Agendamento de Clínica Dentária",
+            "quantity": 30
+        },
+        {
+            "name": "Sistema para Hortelário",
+            "quantity": 20
+        }
+    ],
+    "courses": [
+
+        {
+            "course": "Formação Full Stack",
+            "sales": 40
+        },
+        {
+            "course": "Curso de Frontend",
+            "sales": 30
+        },
+        {
+            "course": "Curso de Backend",
+            "sales": 20
+        },
+        {
+            "course": "UX/UI Design",
+            "sales": 10
+        }
+    ],
+    "satisfaction":[
+        {
+            "category" : "Satisfeitos",
+            "response" : 50
+        },
+        {
+            "category" : "Insatisfeitos",
+            "response" : 20
+        },
+        {
+            "category" : "A melhorar",
+            "response" : 30
         }
     ]
 }

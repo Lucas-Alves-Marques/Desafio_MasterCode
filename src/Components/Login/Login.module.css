@@ -1,5 +1,15 @@
+.body {
+    height: 100vh;
+    color: rgb(0, 247, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+}
+
 .formLogin {
-    margin: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,41 +17,51 @@
 }
 
 .formLogin h1 {
-    text-transform: uppercase;
-    margin-bottom: 4vh;
-    font-size: 4vh;
-    letter-spacing: 0.5vh;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: rgb(0, 247, 0);
+    text-shadow: 0 0 1rem rgb(0, 247, 0);
 }
 
-.spanMaster {
-    color: rgb(0, 214, 0);
-    text-shadow: 0vh 0vh 1vh rgb(0, 214, 0);
-}
-
-.spanCode {
+.formLogin h1 span {
     color: rgb(0, 100, 0);
-    text-shadow: 0vh 0vh 1vh rgb(0, 100, 0);
+    text-shadow: 0 0 1rem rgb(0, 100, 0);
 }
 
 .formLogin input {
-    margin-bottom: 2vh;
-    height: 5vh;
-    width: 40vh;
-    padding-left: 2vh;
-    border: 0.3vh solid rgb(0, 107, 0);
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgb(0, 247, 0);
+    color: rgb(0, 247, 0);
+    font-size: 1rem;
+    border-radius: 0.5vh;
+    width: 20rem;
+    margin-bottom: 1rem;
+}
+
+.formLogin input::placeholder {
+    color: rgb(0, 247, 0, 0.5);
+
 }
 
 .formLogin button {
     height: 5vh;
     width: 100%;
+    border-radius: 0.5vh;
     color: black;
     font-weight: bold;
-    text-transform: uppercase;
     background-color: rgb(0, 247, 0);
     border: none;
     cursor: pointer;
-    font-family: "DM Serif Text", serif;
     font-size: 1.5vh;
+}
+
+.copyRigth {
+    margin-top: 2rem;
+    font-size: 0.8rem;
+    color: rgb(0, 247, 0, 0.5);
+    text-align: center;
+
 }
 
 .message {
@@ -49,14 +69,15 @@
     top: 45vh;
     left: 86vh;
     display: flex;
-    background-color: rgb(0, 107, 0, 0.9);
+    background-color: rgb(0, 100, 0);
     flex-direction: column;
     height: 10vh;
     width: 30vh;
-    color: white;
+    color: rgb(0, 247, 0);
     justify-content: center;
     align-items: center;
-    border: 0.1vh solid white;
+    border-radius: 0.5vh;
+    border: 0.1vh solid rgb(0, 247, 0);
 }
 
 .message button {
@@ -64,8 +85,10 @@
     padding: 0.5vh 2vh;
     color: black;
     background-color: rgb(0, 247, 0);
-    border: 0.1vh solid white;
+    border: none;
     cursor: pointer;
     font-family: "DM Serif Text", serif;
     font-size: 1.5vh;
+    border-radius: 0.5vh;
+
 }

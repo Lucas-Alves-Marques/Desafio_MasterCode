@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Style from './Login.module.css';
 import { useState } from 'react';
-import Conteiner from '../Layout/Conteiner';
+import MatrixEffect from './Background/MatrixEffect';
 
 function Login() {
 
@@ -39,7 +39,7 @@ function Login() {
 
                 const userLogin = data.usuarios.filter((user) => {
 
-                    if (userForm.name == user.nome && userForm.password == user.senha) {
+                    if (userForm.name == user.name && userForm.password == user.password) {
 
                         return user
                     }
@@ -97,43 +97,45 @@ function Login() {
 
     return (
 
-        <Conteiner>
+        <>
+            <MatrixEffect />
+            <div className={Style.body}>
 
-            <form className={Style.formLogin} onSubmit={loginValidation}>
+                <form className={Style.formLogin} onSubmit={loginValidation}>
 
-                <h1>
+                    <h1>MASTER<span>CODE</span></h1>
+                    <input
+                        name='name'
+                        placeholder='Usuário'
+                        onChange={(e) => { handleUser(e) }}
+                    />
+                    <input
+                        name='password'
+                        placeholder='Senha'
+                        type='password'
+                        onChange={(e) => { handleUser(e) }}
+                    />
+                    <button type='submit'>Entrar</button>
 
-                    <span className={Style.spanMaster}>
+                </form>
 
-                        Master
+                <p className={Style.copyRigth}>© 2025 MasterCode. Todos os direitos reservados.</p>
 
-                    </span>
-                    <span className={Style.spanCode}>
+                {message &&
 
-                        code
+                    <div className={Style.message}>
 
-                    </span>
-                </h1>
+                        <p>{message}</p>
+                        <button onClick={(e) => { e.preventDefault(); setMessage(null) }}>OK</button>
 
-                <input name='name' onChange={(e) => { handleUser(e) }} />
-                <input name='password' onChange={(e) => { handleUser(e) }} />
+                    </div>
 
-                <button type='submit'>Entrar</button>
+                }
 
-            </form>
 
-            {message &&
+            </div>
 
-                <div className={Style.message}>
-
-                    <p>{message}</p>
-                    <button onClick={(e) => { e.preventDefault(); setMessage(null) }}>OK</button>
-
-                </div>
-
-            }
-
-        </Conteiner>
+        </>
 
     );
 }

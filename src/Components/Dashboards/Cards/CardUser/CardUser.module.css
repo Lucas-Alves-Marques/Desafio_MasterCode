@@ -1,0 +1,5 @@
+.list li{
+    padding-bottom: 5px;
+    border-bottom: 0.1vh solid rgb(0, 82, 0);
+    margin-bottom: 0.5rem;
+}

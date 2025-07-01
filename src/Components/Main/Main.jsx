@@ -1,28 +1,41 @@
-import Conteiner from '../Layout/Conteiner';
 import Style from '../Main/Main.module.css';
-import Logo from '../../../public/NomeDaEmpresa.png'
+import Logo from '../../Img/NomeDaEmpresa.png';
+import MatrixEffect from '../Login/Background/MatrixEffect';
+import { useNavigate } from 'react-router-dom';
 
-function Main(){
+function Main() {
 
-    return(
+    const navigate = useNavigate();
 
-        <Conteiner>
+    const navigateTo = (url) => {
 
-            <div className={Style.main}>
+        navigate(`${url}`)
 
-                <img alt='Logo da Empresa MasterCode' src={Logo} />
-                <h1>Bem-Vindo á Mastercode: Empresa de Software</h1>
-                <ul>
+    };
 
-                    <li>Home</li>
-                    <li>DashBoards</li>
-                    <li>Contatos</li>
+    return (
 
-                </ul>
+        <>
+            <MatrixEffect />
+            <div className={Style.body}>
+
+                <div className={Style.main}>
+
+                    <img alt='Logo da Empresa MasterCode' src={Logo} />
+                    <h1>Bem-Vindo á <span>MasterCode</span>: Empresa de Software</h1>
+                    <ul>
+
+                        <li>Home</li>
+                        <li onClick={() => {navigateTo('/dashboards')}}>DashBoards</li>
+                        <li>Contatos</li>
+
+                    </ul>
+
+                </div>
 
             </div>
 
-        </Conteiner>
+        </>
 
     )
 
