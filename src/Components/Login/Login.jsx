@@ -37,7 +37,7 @@ function Login() {
             .then(response => response.json())
             .then(data => {
 
-                const userLogin = data.usuarios.filter((user) => {
+                const userLogin = data.users.filter((user) => {
 
                     if (userForm.name == user.name && userForm.password == user.password) {
 
@@ -47,8 +47,6 @@ function Login() {
                 });
 
                 if (userLogin.length > 0) {
-
-                    console.log('Foi')
 
                     Navigate('/main')
                 }

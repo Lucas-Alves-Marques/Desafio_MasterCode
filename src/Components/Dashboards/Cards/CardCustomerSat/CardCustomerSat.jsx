@@ -1,47 +1,71 @@
-import Style from '../CardUser/CardUser.module.css';
+import { useEffect, useState } from 'react';
+import Style from '../CardCustomerSat/CardCustomerSat.module.css';
 import Card from '../Cards';
 import { Chart } from 'chart.js/auto';
-import { Doughnut } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 
-function CardUser({ dataUser }) {
+function CardCustomerSat({ dataCustomer }) {
 
-    const namesLabel = dataUser?.map((user) => {
+    const [satisfaction, setSatisfation] = useState([]);
 
-        const [name, _] = user.name.split(' ');
+    useEffect(() => {
 
-        return name;
+        const totalSum = dataCustomer?.reduce((acc, customer) => acc + customer.response, 0);
 
-    });
+        const results = dataCustomer?.map((cust) => {
+
+            const percentage = (parseFloat(cust.response) / totalSum) * 100;
+
+            return percentage.toFixed(2);
+
+        });
+
+        setSatisfation(results);
+
+    }, [dataCustomer]);
 
     return (
 
-        <Card title={'Usuários Matriculados'}>
+        <Card title={'Gestão de Satisfação do Cliente'}>
 
             <ul className={Style.list}>
 
-                {dataUser?.map((user) => (
+                {dataCustomer?.map((Satisfaction, index) => {
 
-                    <li key={user.name}>{user.name}</li>
+                    if (satisfaction && satisfaction.length == 3) {
 
-                ))}
+                        return (
+
+                            <li key={Satisfaction.category}>
+
+                                {Satisfaction.category}: {satisfaction[index]}%
+
+                            </li>
+
+                        )
+
+                    }
+
+
+                })}
 
             </ul>
             <div>
 
-                <Doughnut
+                <Pie
                     data={{
 
-                        labels: namesLabel,
+                        labels: ['Satisfeitos', 'Neutros', 'Insatisfeitos'],
                         datasets: [{
 
-                            label: 'Usuários',
-                            data: dataUser?.map((user) => (user.quantityCourses)),
+                            label: 'Respostas',
+                            data: dataCustomer?.map((customer) => (customer.response)),
                             backgroundColor: [
-                                
+
                                 'rgb(0, 200, 0)',
-                                'rgb(0, 160, 0)',
-                                'rgb(0, 120, 0)',
-                                'rgb(0, 80, 0)',
+                                'rgb(230, 247, 0)',
+                                'rgb(200, 0, 0)',
+
                             ],
                         }]
                     }}
@@ -64,7 +88,7 @@ function CardUser({ dataUser }) {
                                 titleFont: { size: 13 },
                                 bodyFont: { size: 12 },
                             }
-                            
+
                         },
 
                         responsive: true,
@@ -81,4 +105,4 @@ function CardUser({ dataUser }) {
 
 }
 
-export default CardUser;
+export default CardCustomerSat;

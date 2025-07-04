@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import './MatrixStyle.module.css';
+import style from './MatrixStyle.module.css';
 
 function MatrixEffect() {
 
@@ -74,7 +74,7 @@ function MatrixEffect() {
 
     return (
 
-        <canvas ref={canvasRef} />
+        <canvas ref={canvasRef} className={style.canvas} />
     );
 }
 

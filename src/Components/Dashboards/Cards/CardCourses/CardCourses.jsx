@@ -1,27 +1,19 @@
-import Style from '../CardUser/CardUser.module.css';
+import Style from '../CardCourses/CardCourses.module.css';
 import Card from '../Cards';
 import { Chart } from 'chart.js/auto';
 import { Doughnut } from 'react-chartjs-2';
 
-function CardUser({ dataUser }) {
-
-    const namesLabel = dataUser?.map((user) => {
-
-        const [name, _] = user.name.split(' ');
-
-        return name;
-
-    });
+function CardCourses({ dataCorses }) {
 
     return (
 
-        <Card title={'Usuários Matriculados'}>
+        <Card title={'Cursos e Formações'}>
 
             <ul className={Style.list}>
 
-                {dataUser?.map((user) => (
+                {dataCorses?.map((course) => (
 
-                    <li key={user.name}>{user.name}</li>
+                    <li key={course.course}>{course.course}</li>
 
                 ))}
 
@@ -31,17 +23,18 @@ function CardUser({ dataUser }) {
                 <Doughnut
                     data={{
 
-                        labels: namesLabel,
+                        labels: ['Full Stack', 'Frontend', 'Backend', 'UX/UI'],
                         datasets: [{
 
-                            label: 'Usuários',
-                            data: dataUser?.map((user) => (user.quantityCourses)),
+                            label: 'Serviços',
+                            data: dataCorses?.map((course) => (course.sales)),
                             backgroundColor: [
-                                
+
                                 'rgb(0, 200, 0)',
                                 'rgb(0, 160, 0)',
                                 'rgb(0, 120, 0)',
                                 'rgb(0, 80, 0)',
+
                             ],
                         }]
                     }}
@@ -64,7 +57,7 @@ function CardUser({ dataUser }) {
                                 titleFont: { size: 13 },
                                 bodyFont: { size: 12 },
                             }
-                            
+
                         },
 
                         responsive: true,
@@ -81,4 +74,4 @@ function CardUser({ dataUser }) {
 
 }
 
-export default CardUser;
+export default CardCourses;

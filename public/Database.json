@@ -1,11 +1,9 @@
 {
     "users": [
-
         {
             "name": "João Silva",
             "password": "1234",
-            "quantityCourses": 25
-
+            "quantityCourses": 20
         },
         {
             "name": "Maria Oliveira",
@@ -24,7 +22,6 @@
         }
     ],
     "services": [
-
         {
             "name": "Criação de E-commerce",
             "quantity": 50
@@ -39,7 +36,6 @@
         }
     ],
     "courses": [
-
         {
             "course": "Formação Full Stack",
             "sales": 40
@@ -57,18 +53,46 @@
             "sales": 10
         }
     ],
-    "satisfaction":[
+    "satisfaction": [
         {
-            "category" : "Satisfeitos",
-            "response" : 50
+            "category": "Satisfeitos",
+            "response": 50
         },
         {
-            "category" : "Insatisfeitos",
-            "response" : 20
+            "category": "A melhorar",
+            "response": 30
         },
         {
-            "category" : "A melhorar",
-            "response" : 30
+            "category": "Insatisfeitos",
+            "response": 20
+        }
+    ],
+    "customerService": [
+        {
+            "category": "Satisfeitos",
+            "response": 60
+        },
+        {
+            "category": "A melhorar",
+            "response": 20
+        },
+        {
+            "category": "Insatisfeitos",
+            "response": 20
+        }
+    ],
+    "equipment": [
+        {
+            "category": "Carente",
+            "quantity": 30
+        },
+        {
+            "category": "Moderado",
+            "quantity": 40
+        },
+        {
+            "category": "Abastecido",
+            "quantity": 30
         }
     ]
 }

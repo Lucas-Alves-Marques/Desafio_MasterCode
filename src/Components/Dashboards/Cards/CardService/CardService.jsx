@@ -1,47 +1,38 @@
-import Style from '../CardUser/CardUser.module.css';
+import Style from '../CardService/CardService.module.css';
 import Card from '../Cards';
 import { Chart } from 'chart.js/auto';
-import { Doughnut } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 
-function CardUser({ dataUser }) {
-
-    const namesLabel = dataUser?.map((user) => {
-
-        const [name, _] = user.name.split(' ');
-
-        return name;
-
-    });
+function CardService({ dataService }) {
 
     return (
 
-        <Card title={'Usuários Matriculados'}>
+        <Card title={'Serviços a Executar'}>
 
             <ul className={Style.list}>
 
-                {dataUser?.map((user) => (
+                {dataService?.map((service) => (
 
-                    <li key={user.name}>{user.name}</li>
+                    <li key={service.name}>{service.name}</li>
 
                 ))}
 
             </ul>
             <div>
 
-                <Doughnut
+                <Pie
                     data={{
 
-                        labels: namesLabel,
+                        labels: ['E-Commerce', 'App Clínica', 'Hortelário'],
                         datasets: [{
 
-                            label: 'Usuários',
-                            data: dataUser?.map((user) => (user.quantityCourses)),
+                            label: 'Serviços',
+                            data: dataService?.map((service) => (service.quantity)),
                             backgroundColor: [
                                 
                                 'rgb(0, 200, 0)',
                                 'rgb(0, 160, 0)',
                                 'rgb(0, 120, 0)',
-                                'rgb(0, 80, 0)',
                             ],
                         }]
                     }}
@@ -61,7 +52,7 @@ function CardUser({ dataUser }) {
                             tooltip: {
                                 enabled: true,
                                 backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                                titleFont: { size: 13 },
+                               titleFont: { size: 13 },
                                 bodyFont: { size: 12 },
                             }
                             
@@ -81,4 +72,4 @@ function CardUser({ dataUser }) {
 
 }
 
-export default CardUser;
+export default CardService;

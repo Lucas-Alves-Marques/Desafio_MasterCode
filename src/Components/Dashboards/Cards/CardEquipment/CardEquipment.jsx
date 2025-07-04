@@ -1,29 +1,39 @@
-import Style from '../CardUser/CardUser.module.css';
+import { useEffect, useState } from 'react';
+import Style from '../CardEquipment/CardEquipment.module.css';
 import Card from '../Cards';
 import { Chart } from 'chart.js/auto';
 import { Doughnut } from 'react-chartjs-2';
 
-function CardUser({ dataUser }) {
+function CardEquipment({ dataEquipment }) {
 
-    const namesLabel = dataUser?.map((user) => {
+    const [totalEquip, setTotalEquip] = useState(null);
 
-        const [name, _] = user.name.split(' ');
+    const [status, setStatus] = useState(null);
 
-        return name;
+    useEffect(() => {
 
-    });
+        const totalSum = dataEquipment?.reduce((acc, customer) => acc + customer.quantity, 0);
+
+        setTotalEquip(totalSum);
+
+        const stockStatus = dataEquipment?.reduce((stock, item) => {
+
+            return item.quantity < stock.quantity ? item : stock;
+
+        });
+
+        setStatus(stockStatus?.category);
+
+    }, [dataEquipment])
 
     return (
 
-        <Card title={'Usuários Matriculados'}>
+        <Card title={'Quantidade de Equip.'}>
 
             <ul className={Style.list}>
 
-                {dataUser?.map((user) => (
-
-                    <li key={user.name}>{user.name}</li>
-
-                ))}
+                <li>Total de Equipamentos: {totalEquip}</li>
+                <li>Estoque: {status}</li>
 
             </ul>
             <div>
@@ -31,17 +41,17 @@ function CardUser({ dataUser }) {
                 <Doughnut
                     data={{
 
-                        labels: namesLabel,
+                        labels: ['Carente', 'Moderado', 'Abastecido'],
                         datasets: [{
 
-                            label: 'Usuários',
-                            data: dataUser?.map((user) => (user.quantityCourses)),
+                            label: 'Quantidade',
+                            data: dataEquipment?.map((equip) => (equip.quantity)),
                             backgroundColor: [
-                                
+
+                                'rgb(200, 0, 0)',
+                                'rgb(230, 247, 0)',
                                 'rgb(0, 200, 0)',
-                                'rgb(0, 160, 0)',
-                                'rgb(0, 120, 0)',
-                                'rgb(0, 80, 0)',
+
                             ],
                         }]
                     }}
@@ -64,7 +74,7 @@ function CardUser({ dataUser }) {
                                 titleFont: { size: 13 },
                                 bodyFont: { size: 12 },
                             }
-                            
+
                         },
 
                         responsive: true,
@@ -81,4 +91,4 @@ function CardUser({ dataUser }) {
 
 }
 
-export default CardUser;
+export default CardEquipment;
