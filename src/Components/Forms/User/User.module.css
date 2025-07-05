@@ -14,14 +14,14 @@
     align-items: start;
 }
 
-.header svg{
+.header svg {
     height: 2rem;
     width: 2rem;
     margin-left: 2rem;
     cursor: pointer;
 }
 
-.header h1{
+.header h1 {
     flex: 1;
 }
 

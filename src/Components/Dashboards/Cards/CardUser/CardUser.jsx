@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Style from '../CardUser/CardUser.module.css';
 import Card from '../Cards';
 import { Chart } from 'chart.js/auto';
@@ -5,25 +6,50 @@ import { Doughnut } from 'react-chartjs-2';
 
 function CardUser({ dataUser }) {
 
-    const namesLabel = dataUser?.map((user) => {
+    const [typeUser, setTypeUser] = useState({
 
-        const [name, _] = user.name.split(' ');
-
-        return name;
+        totalUser: null,
+        students: null,
+        buyers: null,
+        studentBuyers: null,
+        visitors: null
 
     });
 
+    useEffect(() => {
+
+       const studentUsers = dataUser?.filter((user) => (user.quantityCourses > 0 && user.shopping == 0 ));
+
+       const buyersUsers = dataUser?.filter((user) => (user.shopping > 0 && user.quantityCourses == 0));
+
+       const studentBuyersUsers = dataUser?.filter((user) => (user.shopping > 0 && user.quantityCourses > 0));
+
+       const visitorsUsers = dataUser?.filter((user) => (user.shopping == 0 && user.quantityCourses == 0));
+
+       const totalUsers = dataUser?.length;
+
+       setTypeUser(prev => ({
+
+        ...prev,
+
+        totalUser: totalUsers,
+        students: studentUsers?.length,
+        buyers: buyersUsers?.length,
+        studentBuyers: studentBuyersUsers?.length,
+        visitors: visitorsUsers?.length,
+
+       }));
+
+
+    }, [dataUser])
+
     return (
 
-        <Card title={'Usuários Matriculados'}>
+        <Card title={'Tipos de Usuários'} url={'/edit/users'}>
 
             <ul className={Style.list}>
 
-                {dataUser?.map((user) => (
-
-                    <li key={user.name}>{user.name}</li>
-
-                ))}
+                    <li>Total de Usuários: {typeUser.totalUser}</li>
 
             </ul>
             <div>
@@ -31,11 +57,11 @@ function CardUser({ dataUser }) {
                 <Doughnut
                     data={{
 
-                        labels: namesLabel,
+                        labels: ['Estudantes', 'Compradores', 'Ambos','Visitantes'],
                         datasets: [{
 
                             label: 'Usuários',
-                            data: dataUser?.map((user) => (user.quantityCourses)),
+                            data: [typeUser.students, typeUser.buyers, typeUser.studentBuyers,typeUser.visitors],
                             backgroundColor: [
                                 
                                 'rgb(0, 200, 0)',

@@ -1,24 +1,35 @@
 {
     "users": [
-        {
+        {   
+            "id": 1,
             "name": "João Silva",
             "password": "1234",
-            "quantityCourses": 20
+            "quantityCourses": 2,
+            "shopping": 0
+
         },
         {
+            "id": 2,
             "name": "Maria Oliveira",
             "password": "5678",
-            "quantityCourses": 30
+            "quantityCourses": 1,
+            "shopping": 5
         },
         {
+            "id": 3,
             "name": "Lucas Santos",
             "password": "9012",
-            "quantityCourses": 20
+            "quantityCourses": 0,
+            "shopping": 10
+
         },
         {
+            "id": 4,
             "name": "Ana Costa",
             "password": "3456",
-            "quantityCourses": 25
+            "quantityCourses": 0,
+            "shopping": 0
+            
         }
     ],
     "services": [

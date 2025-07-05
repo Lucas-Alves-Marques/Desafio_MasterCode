@@ -26,7 +26,7 @@ function CardCourses({ dataCorses }) {
                         labels: ['Full Stack', 'Frontend', 'Backend', 'UX/UI'],
                         datasets: [{
 
-                            label: 'Serviços',
+                            label: 'Cursos Vendidos',
                             data: dataCorses?.map((course) => (course.sales)),
                             backgroundColor: [
 
