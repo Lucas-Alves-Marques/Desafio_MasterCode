@@ -9,22 +9,41 @@ export function DatabaseProvider({ children }) {
 
     const adicionarUsuario = (novoUsuario) => {
 
-        setDatabase(prev => ({
-
-            ...prev,
-            users: [...prev.users, novoUsuario]
-
-        }));
-
-    };
-
-    const editarUsuario = (index, dadosAtualizados) => {
+        console.log(novoUsuario);
 
         setDatabase(prev => {
 
-            const novosUsuarios = [...prev.users];
+            const ultimoId = prev.users.length > 0
+                ? Math.max(...prev.users.map(user => user.id))
+                : 0;
 
-            novosUsuarios[index] = { ...novosUsuarios[index], ...dadosAtualizados };
+            const usuarioComId = {
+
+                ...novoUsuario,
+                id: ultimoId + 1
+            };
+
+            return {
+                ...prev,
+                users: [...prev.users, usuarioComId]
+            };
+        });
+
+    };
+
+    const editarUsuario = (id, dadosAtualizados) => {
+
+        console.log(id);
+
+        console.log(dadosAtualizados);
+
+        setDatabase(prev => {
+
+            const novosUsuarios = prev.users.map(user =>
+
+                user.id === id ? { ...user, ...dadosAtualizados } : user
+
+            );
 
             return { ...prev, users: novosUsuarios };
 
@@ -32,13 +51,11 @@ export function DatabaseProvider({ children }) {
 
     };
 
-    const removerUsuario = (index) => {
+    const removerUsuario = (id) => {
 
         setDatabase(prev => {
 
-            const novosUsuarios = [...prev.users];
-
-            novosUsuarios.splice(index, 1);
+            const novosUsuarios = prev.users.filter(user => user.id !== id);
 
             return { ...prev, users: novosUsuarios };
 
