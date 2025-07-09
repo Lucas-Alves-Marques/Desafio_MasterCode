@@ -13,7 +13,7 @@ function User() {
 
     const navigate = useNavigate();
 
-    const { dataBase, adicionarUsuario, editarUsuario, removerUsuario} = useDatabase();
+    const { dataBase, adicionarUsuario, editarUsuario, removerUsuario } = useDatabase();
 
     const [user, setUser] = useState({
 
@@ -26,6 +26,8 @@ function User() {
     });
 
     const [typePassword, setTypePassword] = useState('password');
+
+    const [message, setMessage] = useState('');
 
     const handleUser = (e) => {
 
@@ -86,9 +88,19 @@ function User() {
         }
     };
 
+    const confirmDel = (e) => {
+
+        e.preventDefault();
+
+        setMessage('Deseja exluir o usuário selecionado?');
+
+    };
+
     const deleteUser = (e) => {
 
         e.preventDefault();
+
+        setMessage('')
 
         removerUsuario(user.id);
 
@@ -190,6 +202,21 @@ function User() {
                             </div>
 
                         </div>
+                        {message &&
+
+                            <div className={Style.message}>
+
+                                <p>{message}</p>
+                                <div>
+
+                                    <button onClick={(e) => { deleteUser(e) }}>Sim</button>
+                                    <button onClick={() => { setMessage('') }}>Não</button>
+
+                                </div>
+
+                            </div>
+
+                        }
                         <div className={Style.btns}>
 
                             {user.id &&
@@ -200,7 +227,7 @@ function User() {
 
                             <button type='submit'>Salvar</button>
 
-                            {user.id && <button onClick={(e) => { deleteUser(e) }}>Excluir</button>}
+                            {user.id && <button onClick={(e) => { confirmDel(e) }}>Excluir</button>}
 
                         </div>
 

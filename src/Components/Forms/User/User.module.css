@@ -28,24 +28,24 @@
 }
 
 .main {
-    padding: 2vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 5rem 10rem;
     flex: 1;
 }
 
 .conteiner {
     padding: 2rem;
-    border: 5px solid rgb(0, 247, 0);
     background-color: black;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 40rem;
+    margin-right: 2rem;
+    border-radius: 1rem;
+    border: 0.1vh solid rgb(0, 247, 0);
+    box-shadow: 0 0 1rem rgb(0, 247, 0);
 }
 
 .conteiner h2 {
@@ -74,13 +74,15 @@
 
 .main form {
     padding: 0 2rem 2rem 2rem;
-    border: 5px solid rgb(0, 247, 0);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: start;
     background-color: black;
     height: 42rem;
+    border-radius: 1rem;
+    border: 0.1vh solid rgb(0, 247, 0);
+    box-shadow: 0 0 1rem rgb(0, 247, 0);
 }
 
 .main form h2 {
@@ -138,4 +140,36 @@
     border: none;
     cursor: pointer;
     font-size: 1.5vh;
+}
+
+.message {
+
+    display: flex;
+    background-color: rgb(0, 100, 0);
+    flex-direction: column;
+    padding: 2rem;
+    color: rgb(0, 247, 0);
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5vh;
+    border: 0.1vh solid rgb(0, 247, 0);
+}
+
+.message div {
+    display: flex;
+    justify-content: space-around;
+    width: 10rem;
+}
+
+.message button {
+    margin-top: 1vh;
+    padding: 0.5vh 2vh;
+    color: black;
+    background-color: rgb(0, 247, 0);
+    border: none;
+    cursor: pointer;
+    font-family: "DM Serif Text", serif;
+    font-size: 1.5vh;
+    border-radius: 0.5vh;
+
 }

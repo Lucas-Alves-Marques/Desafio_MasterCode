@@ -4,6 +4,7 @@ import Main from "./Components/Main/Main.jsx";
 import DashBoards from "./Components/Dashboards/Dashboards.jsx";
 import { DatabaseProvider } from './DataBase/DataBase';
 import User from "./Components/Forms/User/User.jsx";
+import CustomerService from "./Components/Forms/CustomerService/CustomerService.jsx";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/main" element={<Main />} />
           <Route path="/dashboards" element={<DashBoards />} />
           <Route path="/edit/users" element={<User />} />
+          <Route path="/edit/customerser" element={<CustomerService />} />
 
         </Routes>
 

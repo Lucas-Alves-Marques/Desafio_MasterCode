@@ -1,12 +1,13 @@
-.Card{
+.Card {
     padding: 1em;
     border: 1px solid rgb(0, 247, 0);
+    border-radius: 10px;
     display: flex;
     align-items: center;
     width: 25rem;
 }
 
-.cardUser{
+.cardUser {
     border: 1px solid rgb(0, 247, 0);
     padding: 10px;
     margin-right: 2rem;
@@ -16,12 +17,12 @@
 
 }
 
-.cardUser svg{
+.cardUser svg {
     height: 50px;
     width: 50px;
     color: rgb(0, 247, 0);
 }
 
-.infoUser li{
+.infoUser li {
     list-style: none;
 }

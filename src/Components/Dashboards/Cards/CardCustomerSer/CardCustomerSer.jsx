@@ -10,7 +10,7 @@ function CardCustomerSer({ dataCustomer }) {
 
     useEffect(() => {
 
-        const totalSum = dataCustomer?.reduce((acc, customer) => acc + customer.response, 0);
+        const totalSum = dataCustomer?.reduce((acc, customer) => acc + parseInt(customer.response), 0);
 
         setTotalService(totalSum);
 
@@ -20,7 +20,7 @@ function CardCustomerSer({ dataCustomer }) {
 
     return (
 
-        <Card title={'Nível de Atendimento'}>
+        <Card title={'Nível de Atendimento'} url={'/edit/customerser'}>
 
             <ul className={Style.list}>
 

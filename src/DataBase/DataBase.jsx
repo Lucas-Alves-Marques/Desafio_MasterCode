@@ -9,8 +9,6 @@ export function DatabaseProvider({ children }) {
 
     const adicionarUsuario = (novoUsuario) => {
 
-        console.log(novoUsuario);
-
         setDatabase(prev => {
 
             const ultimoId = prev.users.length > 0
@@ -32,10 +30,6 @@ export function DatabaseProvider({ children }) {
     };
 
     const editarUsuario = (id, dadosAtualizados) => {
-
-        console.log(id);
-
-        console.log(dadosAtualizados);
 
         setDatabase(prev => {
 
@@ -63,10 +57,22 @@ export function DatabaseProvider({ children }) {
 
     };
 
+    const updateCustomerSer = (data) => {
+
+        setDatabase(prev => ({
+
+            ...prev,
+
+            customerService: data
+
+        }));
+
+    };
+
     return (
 
         <DatabaseContext.Provider
-            value={{ dataBase, adicionarUsuario, editarUsuario, removerUsuario }}>
+            value={{ dataBase, adicionarUsuario, editarUsuario, removerUsuario, updateCustomerSer }}>
 
             {children}
 
