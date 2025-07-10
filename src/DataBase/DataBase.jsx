@@ -69,10 +69,37 @@ export function DatabaseProvider({ children }) {
 
     };
 
+    const updateCustomerSat = (data) => {
+
+        setDatabase(prev => ({
+
+            ...prev,
+
+            satisfaction: data
+
+        }));
+
+    };
+
+    const updateEquipment = (data) => {
+
+        setDatabase(prev => ({
+
+            ...prev,
+
+            equipment: data
+
+        }));
+
+    };
+
     return (
 
         <DatabaseContext.Provider
-            value={{ dataBase, adicionarUsuario, editarUsuario, removerUsuario, updateCustomerSer }}>
+            value={{
+                dataBase, adicionarUsuario, editarUsuario, removerUsuario,
+                updateCustomerSer, updateCustomerSat, updateEquipment
+            }}>
 
             {children}
 

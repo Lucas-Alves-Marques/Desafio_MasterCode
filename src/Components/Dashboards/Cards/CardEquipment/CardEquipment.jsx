@@ -18,7 +18,7 @@ function CardEquipment({ dataEquipment }) {
 
         const stockStatus = dataEquipment?.reduce((stock, item) => {
 
-            return item.quantity < stock.quantity ? item : stock;
+            return item.quantity > stock.quantity ? item : stock;
 
         });
 
@@ -28,7 +28,7 @@ function CardEquipment({ dataEquipment }) {
 
     return (
 
-        <Card title={'Quantidade de Equip.'}>
+        <Card title={'Quantidade de Equip.'} url={'/edit/stockquant'}>
 
             <ul className={Style.list}>
 

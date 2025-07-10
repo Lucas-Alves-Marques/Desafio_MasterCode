@@ -8,6 +8,7 @@ import { FaEyeSlash as EyesClosed } from "react-icons/fa";
 import Card from './Card/Card';
 import MatrixEffect from '../../Login/Background/MatrixEffect';
 import { useState } from 'react';
+import ConteinerForm from '../Conteiner/ConteinerForm';
 
 function User() {
 
@@ -110,134 +111,119 @@ function User() {
 
     return (
 
-        <>
+        <ConteinerForm title='Gerenciador de Usuários'>
 
-            <MatrixEffect />
-            <div className={Style.body}>
+            <div className={Style.conteiner}>
 
-                <div className={Style.header}>
+                <h2>Usuários</h2>
+                <div className={Style.Cards}>
 
-                    <Return onClick={() => { navigate('/dashboards') }} />
-                    <h1>Gerenciador de Usuários</h1>
+                    {dataBase.users.map((user) => (
 
-                </div>
-                <div className={Style.main}>
+                        <div className={Style.Card}>
 
-                    <div className={Style.conteiner}>
-
-                        <h2>Usuários</h2>
-                        <div className={Style.Cards}>
-
-                            {dataBase.users.map((user) => (
-
-                                <div className={Style.Card}>
-
-                                    <Card user={user} />
-                                    <Pencil className={Style.pencil} onClick={() => { setUser(user) }} />
-
-                                </div>
-
-                            ))
-                            }
-                        </div>
-
-                    </div>
-                    <form onSubmit={submitForm}>
-
-                        <div className={Style.inputs}>
-
-                            <h2>Dados do Usuário</h2>
-                            <div>
-
-                                <p>Nome:</p>
-                                <input
-                                    name='name'
-                                    placeholder='Usuário1'
-                                    value={user.name}
-                                    onChange={(e) => { handleUser(e) }}
-                                />
-
-                            </div>
-                            <div>
-
-                                <p>Senha:</p>
-                                {typePassword == 'text'
-
-                                    ? <Eyes onClick={() => { handlePassword() }} />
-                                    : <EyesClosed onClick={() => { handlePassword() }} />
-
-                                }
-
-                                <input
-                                    name='password'
-                                    type={typePassword}
-                                    value={user.password}
-                                    onChange={(e) => { handleUser(e) }}
-                                />
-
-                            </div>
-                            <div>
-
-                                <p>Cursos Comprados:</p>
-                                <input
-                                    name='quantityCourses'
-                                    placeholder='1'
-                                    value={user.quantityCourses}
-                                    className={Style.alingText}
-                                    onChange={(e) => { handleUser(e) }}
-                                />
-
-                            </div>
-                            <div>
-
-                                <p>Componentes Comprados:</p>
-                                <input
-                                    name='shopping'
-                                    placeholder='1'
-                                    className={Style.alingText}
-                                    value={user.shopping}
-                                    onChange={(e) => { handleUser(e) }}
-                                />
-
-                            </div>
-
-                        </div>
-                        {message &&
-
-                            <div className={Style.message}>
-
-                                <p>{message}</p>
-                                <div>
-
-                                    <button onClick={(e) => { deleteUser(e) }}>Sim</button>
-                                    <button onClick={() => { setMessage('') }}>Não</button>
-
-                                </div>
-
-                            </div>
-
-                        }
-                        <div className={Style.btns}>
-
-                            {user.id &&
-
-                                <button onClick={(e) => { newUser(e) }}>Novo Usuário</button>
-
-                            }
-
-                            <button type='submit'>Salvar</button>
-
-                            {user.id && <button onClick={(e) => { confirmDel(e) }}>Excluir</button>}
+                            <Card user={user} />
+                            <Pencil className={Style.pencil} onClick={() => { setUser(user) }} />
 
                         </div>
 
-                    </form>
-
+                    ))
+                    }
                 </div>
 
             </div>
+            <form onSubmit={submitForm} className={Style.form}>
 
-        </>
+                <div className={Style.inputs}>
+
+                    <h2>Dados do Usuário</h2>
+                    <div>
+
+                        <p>Nome:</p>
+                        <input
+                            name='name'
+                            placeholder='Usuário1'
+                            value={user.name}
+                            onChange={(e) => { handleUser(e) }}
+                        />
+
+                    </div>
+                    <div>
+
+                        <p>Senha:</p>
+                        {typePassword == 'text'
+
+                            ? <Eyes onClick={() => { handlePassword() }} />
+                            : <EyesClosed onClick={() => { handlePassword() }} />
+
+                        }
+
+                        <input
+                            name='password'
+                            type={typePassword}
+                            value={user.password}
+                            onChange={(e) => { handleUser(e) }}
+                        />
+
+                    </div>
+                    <div>
+
+                        <p>Cursos Comprados:</p>
+                        <input
+                            name='quantityCourses'
+                            placeholder='1'
+                            value={user.quantityCourses}
+                            className={Style.alingText}
+                            onChange={(e) => { handleUser(e) }}
+                        />
+
+                    </div>
+                    <div>
+
+                        <p>Componentes Comprados:</p>
+                        <input
+                            name='shopping'
+                            placeholder='1'
+                            className={Style.alingText}
+                            value={user.shopping}
+                            onChange={(e) => { handleUser(e) }}
+                        />
+
+                    </div>
+
+                </div>
+                {message &&
+
+                    <div className={Style.message}>
+
+                        <p>{message}</p>
+                        <div>
+
+                            <button onClick={(e) => { deleteUser(e) }}>Sim</button>
+                            <button onClick={() => { setMessage('') }}>Não</button>
+
+                        </div>
+
+                    </div>
+
+                }
+                <div className={Style.btns}>
+
+                    {user.id &&
+
+                        <button onClick={(e) => { newUser(e) }}>Novo Usuário</button>
+
+                    }
+
+                    <button type='submit'>Salvar</button>
+
+                    {user.id && <button onClick={(e) => { confirmDel(e) }}>Excluir</button>}
+
+                </div>
+
+            </form>
+
+        </ConteinerForm>
 
     );
 

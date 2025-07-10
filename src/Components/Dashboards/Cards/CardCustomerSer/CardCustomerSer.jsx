@@ -14,8 +14,6 @@ function CardCustomerSer({ dataCustomer }) {
 
         setTotalService(totalSum);
 
-        console.log(totalSum)
-
     }, [dataCustomer]);
 
     return (

@@ -1,18 +1,18 @@
-import Style from './CustomerService.module.css';
-import { useDatabase } from '../../../DataBase/DataBase';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import Style from '../CustomerSatisfaction/CustomerSatisf.module.css';
 import ConteinerForm from '../Conteiner/ConteinerForm';
+import { useDatabase } from '../../../DataBase/DataBase';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function CustomerService() {
+function CustomerSatisf() {
 
-    const navigate = useNavigate();
-
-    const { dataBase, updateCustomerSer } = useDatabase();
+    const { dataBase, updateCustomerSat } = useDatabase();
 
     const [data, setData] = useState([]);
 
     const [message, setMessage] = useState('');
+
+    const navigate = useNavigate();
 
     const handleValue = (e) => {
 
@@ -37,23 +37,23 @@ function CustomerService() {
 
         setMessage('Atualização Realizada');
 
-        updateCustomerSer(data);
+        updateCustomerSat(data);
 
     };
 
     useEffect(() => {
 
-        setData(dataBase?.customerService);
+        setData(dataBase?.satisfaction);
 
     }, []);
 
     return (
 
-        <ConteinerForm title='Pesquisa de Satisfação de Atendimento'>
+        <ConteinerForm title='Satisfação do Cliente'>
 
             <div className={Style.conteiner}>
 
-                <h2>Nível de Atendimento</h2>
+                <h2>Nível de Satisfação</h2>
                 <form onSubmit={(e) => { saveForm(e) }}>
 
                     {data.map((field) => (
@@ -95,7 +95,6 @@ function CustomerService() {
 
         </ConteinerForm>
     );
+};
 
-}
-
-export default CustomerService;
+export default CustomerSatisf;

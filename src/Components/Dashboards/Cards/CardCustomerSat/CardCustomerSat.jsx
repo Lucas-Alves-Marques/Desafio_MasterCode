@@ -26,7 +26,7 @@ function CardCustomerSat({ dataCustomer }) {
 
     return (
 
-        <Card title={'Gestão de Satisfação do Cliente'}>
+        <Card title={'Gestão de Satisfação do Cliente'} url='/edit/customersat'>
 
             <ul className={Style.list}>
 

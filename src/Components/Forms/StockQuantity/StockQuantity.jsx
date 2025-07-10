@@ -1,18 +1,18 @@
-import Style from './CustomerService.module.css';
-import { useDatabase } from '../../../DataBase/DataBase';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import Style from '../StockQuantity/StockQuantity.module.css';
 import ConteinerForm from '../Conteiner/ConteinerForm';
+import { useDatabase } from '../../../DataBase/DataBase';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function CustomerService() {
+function StockQuantity() {
 
-    const navigate = useNavigate();
-
-    const { dataBase, updateCustomerSer } = useDatabase();
+    const { dataBase, updateEquipment } = useDatabase();
 
     const [data, setData] = useState([]);
 
     const [message, setMessage] = useState('');
+
+    const navigate = useNavigate();
 
     const handleValue = (e) => {
 
@@ -20,7 +20,7 @@ function CustomerService() {
 
             if (field.category == e.target.name) {
 
-                field.response = parseInt(e.target.value) ? parseInt(e.target.value) : e.target.value
+                field.quantity = parseInt(e.target.value) ? parseInt(e.target.value) : e.target.value
             }
 
             return field;
@@ -37,23 +37,23 @@ function CustomerService() {
 
         setMessage('Atualização Realizada');
 
-        updateCustomerSer(data);
+        updateEquipment(data);
 
     };
 
     useEffect(() => {
 
-        setData(dataBase?.customerService);
+        setData(dataBase?.equipment);
 
     }, []);
 
     return (
 
-        <ConteinerForm title='Pesquisa de Satisfação de Atendimento'>
+        <ConteinerForm title='Quantidade de Equipamentos'>
 
             <div className={Style.conteiner}>
 
-                <h2>Nível de Atendimento</h2>
+                <h2>Nível de Estoque</h2>
                 <form onSubmit={(e) => { saveForm(e) }}>
 
                     {data.map((field) => (
@@ -63,7 +63,7 @@ function CustomerService() {
                             <h4>{field.category}</h4>
                             <input
                                 name={field.category}
-                                value={field.response}
+                                value={field.quantity}
                                 onChange={(e) => { handleValue(e) }}
                             />
 
@@ -95,7 +95,6 @@ function CustomerService() {
 
         </ConteinerForm>
     );
+};
 
-}
-
-export default CustomerService;
+export default StockQuantity;

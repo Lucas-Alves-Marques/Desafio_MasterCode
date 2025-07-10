@@ -15,6 +15,20 @@ function DashBoards() {
 
     const { dataBase } = useDatabase();
 
+    // Pegando os dados no banco de dados
+
+    /*
+
+    const [dataBase, setDataBase] = useState([]);
+
+    useEffect(() => {
+        
+        fecth
+        
+    }, []);
+
+    */
+
     return (
 
         <div className={Style.body}>
