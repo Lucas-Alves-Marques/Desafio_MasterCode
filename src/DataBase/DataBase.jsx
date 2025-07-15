@@ -93,12 +93,114 @@ export function DatabaseProvider({ children }) {
 
     };
 
+    const adicionarServiço = (novoServiço) => {
+
+        setDatabase(prev => {
+
+            const ultimoId = prev.services.length > 0
+                ? Math.max(...prev.services.map(serv => serv.id))
+                : 0;
+
+            const serviceComId = {
+
+                ...novoServiço,
+                id: ultimoId + 1
+            };
+
+            return {
+                ...prev,
+                services: [...prev.services, serviceComId]
+            };
+        });
+
+    };
+
+    const editarServiço = (id, dadosAtualizados) => {
+
+        setDatabase(prev => {
+
+            const novosServicos = prev.services.map(service =>
+
+                service.id === id ? { ...service, ...dadosAtualizados } : service
+
+            );
+
+            return { ...prev, services: novosServicos };
+
+        });
+
+    };
+
+    const removerServiço = (id) => {
+
+        setDatabase(prev => {
+
+            const novosServicos = prev.services.filter(service => service.id !== id);
+
+            return { ...prev, services: novosServicos };
+
+        });
+
+    };
+
+    const adicionarCurso = (novoCurso) => {
+
+        setDatabase(prev => {
+
+            const ultimoId = prev.courses.length > 0
+                ? Math.max(...prev.courses.map(course => course.id))
+                : 0;
+
+            const cursoComId = {
+
+                ...novoCurso,
+                id: ultimoId + 1
+            };
+
+            return {
+                ...prev,
+                courses: [...prev.courses, cursoComId]
+            };
+        });
+
+    };
+
+    const editarCurso = (id, dadosAtualizados) => {
+
+        setDatabase(prev => {
+
+            const novosCursos = prev.courses.map(course =>
+
+                course.id === id ? { ...course, ...dadosAtualizados } : course
+
+            );
+
+            return { ...prev, courses: novosCursos };
+
+        });
+
+    };
+
+    const removerCurso = (id) => {
+
+        setDatabase(prev => {
+
+            const novosCursos = prev.courses.filter(course => course.id !== id);
+
+            return { ...prev, courses: novosCursos };
+
+        });
+
+    };
+
     return (
 
         <DatabaseContext.Provider
             value={{
                 dataBase, adicionarUsuario, editarUsuario, removerUsuario,
-                updateCustomerSer, updateCustomerSat, updateEquipment
+                updateCustomerSer, updateCustomerSat, updateEquipment,
+                adicionarServiço, editarServiço, removerServiço,
+                adicionarCurso, editarCurso, removerCurso
             }}>
 
             {children}

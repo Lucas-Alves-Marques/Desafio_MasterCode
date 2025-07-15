@@ -7,12 +7,6 @@ function Main() {
 
     const navigate = useNavigate();
 
-    const navigateTo = (url) => {
-
-        navigate(`${url}`)
-
-    };
-
     return (
 
         <>
@@ -25,9 +19,9 @@ function Main() {
                     <h1>Bem-Vindo á <span>MasterCode</span>: Empresa de Software</h1>
                     <ul>
 
-                        <li>Home</li>
-                        <li onClick={() => {navigateTo('/dashboards')}}>DashBoards</li>
-                        <li>Contatos</li>
+                        <li onClick={() => { navigate('/dashboards') }}>DashBoards</li>
+                        <li onClick={() => { navigate("/contacts") }}>Contatos</li>
+                        <li onClick={() => { navigate("/") }}>Sair</li>
 
                     </ul>
 

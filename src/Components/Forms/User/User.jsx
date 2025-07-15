@@ -1,12 +1,10 @@
 import Style from './User.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useDatabase } from '../../../DataBase/DataBase';
-import { IoMdArrowRoundBack as Return } from "react-icons/io";
 import { IoPencil as Pencil } from "react-icons/io5";
 import { IoEyeSharp as Eyes } from "react-icons/io5";
 import { FaEyeSlash as EyesClosed } from "react-icons/fa";
 import Card from './Card/Card';
-import MatrixEffect from '../../Login/Background/MatrixEffect';
 import { useState } from 'react';
 import ConteinerForm from '../Conteiner/ConteinerForm';
 
@@ -78,14 +76,21 @@ function User() {
 
         if (user.id == null) {
 
-
             adicionarUsuario(user);
+
+            setMessage('Usuário Cadastrado');
+
+            newUser();
 
         }
 
         else {
 
             editarUsuario(user.id, user);
+
+            setMessage('Usuário Salvo');
+
+            newUser(e);
         }
     };
 
@@ -197,14 +202,25 @@ function User() {
                     <div className={Style.message}>
 
                         <p>{message}</p>
-                        <div>
 
-                            <button onClick={(e) => { deleteUser(e) }}>Sim</button>
-                            <button onClick={() => { setMessage('') }}>Não</button>
+                        {message == 'Deseja exluir o usuário selecionado?' ?
 
-                        </div>
+                            <div>
+
+                                <button onClick={(e) => { deleteUser(e) }}>Sim</button>
+                                <button onClick={() => { setMessage('') }}>Não</button>
+
+                            </div>
+
+                            :
+
+                            <button onClick={() => { setMessage('') }}>OK</button>
+
+                        }
+
 
                     </div>
+
 
                 }
                 <div className={Style.btns}>

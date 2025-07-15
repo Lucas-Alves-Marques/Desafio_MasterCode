@@ -7,7 +7,7 @@ function CardService({ dataService }) {
 
     return (
 
-        <Card title={'Serviços a Executar'}>
+        <Card title={'Serviços a Executar'} url={'/edit/services'}>
 
             <ul className={Style.list}>
 
@@ -23,7 +23,7 @@ function CardService({ dataService }) {
                 <Pie
                     data={{
 
-                        labels: ['E-Commerce', 'App Clínica', 'Hortelário'],
+                        labels: dataService?.map((service) => (service.label)),
                         datasets: [{
 
                             label: 'Serviços',

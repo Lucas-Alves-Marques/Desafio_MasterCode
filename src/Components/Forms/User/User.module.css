@@ -17,10 +17,21 @@
 }
 
 .Cards {
-    flex-grow: 1;
+    padding-right: 1rem;
     overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: rgb(0, 247, 0);
+}
+
+.Cards::-webkit-scrollbar {
+    width: 5px;
+}
+
+.Cards::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.Cards::-webkit-scrollbar-thumb {
+    background-color: rgb(0, 82, 0);
+    border-radius: 10px;
 }
 
 .Card {
@@ -107,7 +118,7 @@
 }
 
 .message {
-
+    margin: auto;
     display: flex;
     background-color: rgb(0, 100, 0);
     flex-direction: column;

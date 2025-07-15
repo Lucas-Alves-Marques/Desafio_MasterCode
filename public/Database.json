@@ -33,35 +33,50 @@
         }
     ],
     "services": [
-        {
+        {   
+            "id": 1,
             "name": "Criação de E-commerce",
-            "quantity": 50
+            "quantity": 50,
+            "label": "E-commerce"
         },
         {
+            "id": 2,
             "name": "App para Agendamento de Clínica Dentária",
-            "quantity": 30
+            "quantity": 30,
+            "label": "App Clínica"
         },
         {
+            "id": 3,
             "name": "Sistema para Hortelário",
-            "quantity": 20
+            "quantity": 20,
+            "label": "Hortelário"
         }
     ],
     "courses": [
-        {
+        {   
+            "id": 1,
             "course": "Formação Full Stack",
-            "sales": 40
+            "sales": 40,
+            "label" : "Full Stack"
         },
         {
+            "id": 2,
             "course": "Curso de Frontend",
-            "sales": 30
+            "sales": 30,
+            "label" : "Frontend"
         },
         {
+            "id": 3,
             "course": "Curso de Backend",
-            "sales": 20
+            "sales": 20,
+            "label" : "Backend"
+
         },
         {
+            "id": 5,
             "course": "UX/UI Design",
-            "sales": 10
+            "sales": 10,
+            "label" : "UX/UI"
         }
     ],
     "satisfaction": [

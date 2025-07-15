@@ -7,7 +7,7 @@ function CardCourses({ dataCorses }) {
 
     return (
 
-        <Card title={'Cursos e Formações'}>
+        <Card title={'Cursos e Formações'} url={'/edit/courses'}>
 
             <ul className={Style.list}>
 
@@ -23,7 +23,7 @@ function CardCourses({ dataCorses }) {
                 <Doughnut
                     data={{
 
-                        labels: ['Full Stack', 'Frontend', 'Backend', 'UX/UI'],
+                        labels: dataCorses?.map((course) => (course.label)),
                         datasets: [{
 
                             label: 'Cursos Vendidos',
