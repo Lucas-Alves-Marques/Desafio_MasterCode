@@ -29,15 +29,23 @@ function Login() {
 
     const loginValidation = (e) => {
 
-        //Simulação de validação no Banco de Dados
-
         e.preventDefault();
 
-        fetch('../../../public/Database.json')
-            .then(response => response.json())
+        fetch('http://localhost:5000/users', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao enviar dados');
+                }
+                return response.json();
+            })
             .then(data => {
 
-                const userLogin = data.users.filter((user) => {
+                const userLogin = data.filter((user) => {
 
                     if (userForm.name == user.name && userForm.password == user.password) {
 
@@ -48,48 +56,22 @@ function Login() {
 
                 if (userLogin.length > 0) {
 
-                    Navigate('/main')
+                    Navigate('/dashboards')
                 }
 
                 else {
 
                     setMessage('Usuario não cadastrado')
-                    // console.log(userLogin)
 
                 };
 
-            }).catch(error => console.error('Erro ao carregar JSON:', error));
+            })
+            .catch(error => {
 
+                setMessage('Usuario não cadastrado')
+                console.error('Erro na requisição:', error);
 
-        //Mandando para o back-end
-
-        // fetch('API', {
-
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(userForm),
-        // })
-        //     .then(response => {
-
-        //         if (!response.ok) {
-
-        //             throw new Error('Erro ao enviar dados');
-        //         }
-
-        //         return response.json();
-        //     })
-        //     .then(data => {
-
-        //         console.log('Resposta do servidor:', data);
-
-        //     })
-        //     .catch(error => {
-
-        //         console.error('Erro na requisição:', error);
-
-        //     });
+            });
 
     };
 
@@ -116,9 +98,6 @@ function Login() {
                     <button type='submit'>Entrar</button>
 
                 </form>
-
-                <p className={Style.copyRigth}>© 2025 MasterCode. Todos os direitos reservados.</p>
-
                 {message &&
 
                     <div className={Style.message}>

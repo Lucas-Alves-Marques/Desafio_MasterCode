@@ -1,13 +1,13 @@
 import Style from './Courses.module.css';
 import ConteinerForm from '../Conteiner/ConteinerForm';
 import Card from './Card/Card';
-import { useDatabase } from '../../../DataBase/DataBase';
 import { IoPencil as Pencil } from "react-icons/io5";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { GiDiploma as Diploma } from "react-icons/gi";
 
 function Courses() {
 
-    const { dataBase, adicionarCurso, editarCurso, removerCurso } = useDatabase();
+    const [courses, setCourses] = useState();
 
     const [course, setCourse] = useState({
 
@@ -60,11 +60,22 @@ function Courses() {
 
         e.preventDefault();
 
-        setMessage('')
+        fetch(`http://localhost:5000/courses/${course.id}`, {
 
-        removerCurso(course.id);
-
-        newCourse(e);
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(() => {
+                setMessage('Curso Excluído');
+                newCourse(e);
+            })
+            .catch(error => {
+                setMessage('Erro ao excluir curso');
+                console.error('Erro ao excluir curso:', error);
+            });
 
     };
 
@@ -74,26 +85,74 @@ function Courses() {
 
         if (course.id == null) {
 
-            adicionarCurso(course);
+            const updateCourse = { ...course, id: String(courses.length + 1) }
 
-            setMessage('Curso Adicionado');
+            fetch('http://localhost:5000/courses', {
 
-            newCourse(e);
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updateCourse)
+            })
+                .then(response => response.json())
+                .then(() => {
+                    setMessage('Curso Adicionado');
+                    newCourse(e);
+
+                })
+                .catch(error => {
+                    setMessage('Erro ao adicionar curso');
+                    console.error('Erro ao adicionar curso:', error);
+                });
 
         }
 
         else {
 
-            editarCurso(course.id, course);
 
-            setMessage('Curso Salvo');
+            fetch(`http://localhost:5000/courses/${course.id}`, {
 
-            newCourse(e);
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(course)
+            })
+                .then(response => response.json())
+                .then(() => {
+                    setMessage('Curso Salvo');
+                    newCourse(e);
 
+                })
+                .catch(error => {
+                    setMessage('Erro ao salvar curso');
+                    console.error('Erro ao salvar curso:', error);
+                });
 
         }
-        
+
     };
+
+    useEffect(() => {
+
+        fetch('http://localhost:5000/courses', {
+
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setCourses(data);
+            })
+            .catch(error => {
+                console.error('Erro ao buscar cursos:', error);
+            });
+
+
+    }, [course])
 
     return (
 
@@ -104,17 +163,30 @@ function Courses() {
                 <h2>Cursos</h2>
                 <div className={Style.Cards}>
 
-                    {dataBase.courses.map((course) => (
+                    {courses?.length == 0 ?
 
-                        <div className={Style.Card}>
+                        <div className={Style.nenhumCurso}>
 
-                            <Card course={course} />
-                            <Pencil className={Style.pencil} onClick={() => { setCourse(course) }} />
+                            <Diploma />
+                            <h3>Nenhum curso cadastrado</h3>
 
                         </div>
 
-                    ))
+                        :
+
+                        courses?.map((course) => (
+
+                            <div className={Style.Card} key={course.id}>
+
+                                <Card course={course} />
+                                <Pencil className={Style.pencil} onClick={() => { setCourse(course) }} />
+
+                            </div>
+
+                        ))
+
                     }
+
                 </div>
 
             </div>
@@ -128,7 +200,7 @@ function Courses() {
                         <p>Curso:</p>
                         <input
                             name='course'
-                            value={course.course}
+                            value={course.course || ''}
                             onChange={(e) => { handleCourse(e) }}
                             className={Style.inputService}
                         />
@@ -136,10 +208,10 @@ function Courses() {
                     </div>
                     <div>
 
-                        <p>Quantidade Vendida:</p>
+                        <p>Vendas:</p>
                         <input
                             name='sales'
-                            value={course.sales}
+                            value={course.sales || ''}
                             onChange={(e) => { handleCourse(e) }}
                             className={Style.alingText}
                         />
@@ -150,7 +222,7 @@ function Courses() {
                         <p>Rótulo:</p>
                         <input
                             name='label'
-                            value={course.label}
+                            value={course.label || ''}
                             onChange={(e) => { handleCourse(e) }}
                             className={Style.alingText}
 

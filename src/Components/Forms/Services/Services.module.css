@@ -3,7 +3,7 @@
     background-color: black;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     height: 40rem;
     margin-right: 2rem;
@@ -19,6 +19,7 @@
 .Cards {
     overflow-y: auto;
     padding-right: 1rem;
+    width: 35rem;
 }
 
 .Cards::-webkit-scrollbar {
@@ -66,6 +67,12 @@
     text-align: center;
 }
 
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
 .inputs div {
     display: flex;
     align-items: center;
@@ -87,15 +94,29 @@
     width: 100%;
 }
 
-.inputs div input {
+.inputs div input,
+.inputs div textarea {
     padding: 5px;
     background: rgba(0, 0, 0, 0.7);
     border: 1px solid rgb(0, 247, 0);
     color: rgb(0, 247, 0);
     font-size: 1rem;
     border-radius: 0.5vh;
-    margin-left: 1rem;
 
+}
+
+.inputs div textarea {
+    max-height: 10rem;
+    max-width: 24rem;
+}
+
+.description {
+    display: flex;
+    gap: 1.5rem;
+    align-items: start;
+    justify-content: end;
+    flex-direction: column;
+    width: 20rem;
 }
 
 .inputService {
@@ -154,4 +175,19 @@
     font-size: 1.5vh;
     border-radius: 0.5vh;
 
+}
+
+.nenhumServico {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 30rem;
+
+}
+
+.nenhumServico svg {
+    height: 5rem;
+    width: 5rem;
+    margin-bottom: 1rem;
 }

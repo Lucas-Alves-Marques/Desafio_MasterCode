@@ -14,9 +14,9 @@ function Card({ service }) {
             </div>
             <ul className={Style.infoService}>
 
-                <li>Serviço: {service.name}</li>
-                <li>Quantidade: {service.quantity}</li>
-                <li>Rótulo: {service.label}</li>
+                <li> <span>Serviço: </span> {service.label}</li>
+                <li> <span>Quantidade: </span> {service.quantity}</li>
+                <li> <span>Descrição: </span> {service.name}</li>
 
             </ul>
 

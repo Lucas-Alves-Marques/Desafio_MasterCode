@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import Style from '../CardUser/CardUser.module.css';
 import Card from '../Cards';
-import { Chart } from 'chart.js/auto';
 import { Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
-function CardUser({ dataUser }) {
+ChartJS.register(ArcElement, Tooltip, Legend);
+
+function CardUser() {
 
     const [typeUser, setTypeUser] = useState({
 
@@ -18,30 +20,50 @@ function CardUser({ dataUser }) {
 
     useEffect(() => {
 
-       const studentUsers = dataUser?.filter((user) => (user.quantityCourses > 0 && user.shopping == 0 ));
+        fetch('http://localhost:5000/users',
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        )
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao enviar dados');
+                }
+                return response.json();
+            })
+            .then(data => {
 
-       const buyersUsers = dataUser?.filter((user) => (user.shopping > 0 && user.quantityCourses == 0));
+                const studentUsers = data?.filter((user) => (user.quantityCourses > 0 && user.shopping == 0));
 
-       const studentBuyersUsers = dataUser?.filter((user) => (user.shopping > 0 && user.quantityCourses > 0));
+                const buyersUsers = data?.filter((user) => (user.shopping > 0 && user.quantityCourses == 0));
 
-       const visitorsUsers = dataUser?.filter((user) => (user.shopping == 0 && user.quantityCourses == 0));
+                const studentBuyersUsers = data?.filter((user) => (user.shopping > 0 && user.quantityCourses > 0));
 
-       const totalUsers = dataUser?.length;
+                const visitorsUsers = data?.filter((user) => (user.shopping == 0 && user.quantityCourses == 0));
 
-       setTypeUser(prev => ({
+                const totalUsers = data?.length;
 
-        ...prev,
+                setTypeUser(prev => ({
 
-        totalUser: totalUsers,
-        students: studentUsers?.length,
-        buyers: buyersUsers?.length,
-        studentBuyers: studentBuyersUsers?.length,
-        visitors: visitorsUsers?.length,
+                    ...prev,
 
-       }));
+                    totalUser: totalUsers,
+                    students: studentUsers?.length,
+                    buyers: buyersUsers?.length,
+                    studentBuyers: studentBuyersUsers?.length,
+                    visitors: visitorsUsers?.length,
+
+                }));
+
+            })
 
 
-    }, [dataUser])
+
+
+    }, [])
 
     return (
 
@@ -49,7 +71,7 @@ function CardUser({ dataUser }) {
 
             <ul className={Style.list}>
 
-                    <li>Total de Usuários: {typeUser.totalUser}</li>
+                <li>Total de Usuários: {typeUser.totalUser}</li>
 
             </ul>
             <div>
@@ -57,13 +79,13 @@ function CardUser({ dataUser }) {
                 <Doughnut
                     data={{
 
-                        labels: ['Estudantes', 'Compradores', 'Ambos','Visitantes'],
+                        labels: ['Estudantes', 'Compradores', 'Ambos', 'Visitantes'],
                         datasets: [{
 
                             label: 'Usuários',
-                            data: [typeUser.students, typeUser.buyers, typeUser.studentBuyers,typeUser.visitors],
+                            data: [typeUser.students, typeUser.buyers, typeUser.studentBuyers, typeUser.visitors],
                             backgroundColor: [
-                                
+
                                 'rgb(0, 200, 0)',
                                 'rgb(0, 160, 0)',
                                 'rgb(0, 120, 0)',
@@ -90,7 +112,7 @@ function CardUser({ dataUser }) {
                                 titleFont: { size: 13 },
                                 bodyFont: { size: 12 },
                             }
-                            
+
                         },
 
                         responsive: true,

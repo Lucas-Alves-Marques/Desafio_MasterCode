@@ -1,0 +1,114 @@
+{
+  "users": [
+    {
+      "id": "5",
+      "name": "Lucas Alves",
+      "password": "1234",
+      "quantityCourses": "1",
+      "shopping": 0
+    }
+  ],
+  "services": [
+    {
+      "id": "1",
+      "name": "Criação de E-commerce",
+      "quantity": 50,
+      "label": "E-commerce"
+    },
+    {
+      "id": "2",
+      "name": "App para Agendamento de Clínica Dentária",
+      "quantity": 30,
+      "label": "App Clínica"
+    },
+    {
+      "id": "3",
+      "name": "Sistema para Hortelário",
+      "quantity": 20,
+      "label": "Hortelário"
+    },
+    {
+      "id": "4",
+      "name": "Criação de app para de SAC para os nossos clientes",
+      "quantity": "5",
+      "label": "App de Suporte"
+    }
+  ],
+  "courses": [
+    {
+      "id": "1",
+      "course": "Formação Full Stack",
+      "sales": 40,
+      "label": "Full Stack"
+    },
+    {
+      "id": "2",
+      "course": "Curso de Frontend",
+      "sales": 30,
+      "label": "Frontend"
+    },
+    {
+      "id": "3",
+      "course": "Curso de Backend",
+      "sales": 20,
+      "label": "Backend"
+    },
+    {
+      "id": "4",
+      "course": "UX/UI Design",
+      "sales": 10,
+      "label": "UX/UI"
+    }
+  ],
+  "satisfaction": [
+    {
+      "category": "Satisfeitos",
+      "response": 25,
+      "id": "7394"
+    },
+    {
+      "category": "A melhorar",
+      "response": 25,
+      "id": "346e"
+    },
+    {
+      "category": "Insatisfeitos",
+      "response": 25,
+      "id": "652f"
+    }
+  ],
+  "customerService": [
+    {
+      "category": "Satisfeitos",
+      "response": 25,
+      "id": "07b2"
+    },
+    {
+      "category": "A melhorar",
+      "response": 25,
+      "id": "174e"
+    },
+    {
+      "category": "Insatisfeitos",
+      "response": 25,
+      "id": "0f67"
+    }
+  ],
+  "equipment": [
+    {
+      "category": "Carente",
+      "quantity": 25,
+      "id": "1"
+    },
+    {
+      "category": "Moderado",
+      "quantity": 25,
+      "id": "2"
+    },
+    {
+      "category": "Abastecido",
+      "quantity": 25,
+      "id": "3"
+    }
+  ]
+}

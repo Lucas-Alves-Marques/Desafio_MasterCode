@@ -1,14 +1,13 @@
 import Style from './Services.module.css';
 import ConteinerForm from '../Conteiner/ConteinerForm';
 import Card from './Card/Card';
-import { useDatabase } from '../../../DataBase/DataBase';
 import { IoPencil as Pencil } from "react-icons/io5";
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import { FaCode as Code } from "react-icons/fa";
 
 function Service() {
 
-    const { dataBase, adicionarServiço, editarServiço, removerServiço } = useDatabase();
+    const [services, setServices] = useState();
 
     const [service, setService] = useState({
 
@@ -63,9 +62,25 @@ function Service() {
 
         setMessage('')
 
-        removerServiço(service.id);
+        fetch(`http://localhost:5000/services/${String(service.id)}`, {
 
-        newService(e);
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(() => {
+
+                setMessage('Serviço Excluído');
+                newService(e);
+
+            })
+            .catch(error => {
+                console.error('Erro ao buscar serviços:', error);
+                setMessage('Erro ao excluir serviço');
+
+            });
 
     };
 
@@ -73,27 +88,99 @@ function Service() {
 
         e.preventDefault();
 
+        if (!service.quantity && service.quantity == null) {
+
+            setMessage('Preencha a quantidade');
+
+            return
+        }
+
+        if (!service.label && service.label == null) {
+
+            setMessage('Preencha o nome do serviço');
+
+            return
+        }
+
+        if (!service.name && service.name == null) {
+
+            setMessage('Preencha a descrição do serviço');
+
+            return;
+        }
+
         if (service.id == null) {
 
+            const updateService = { ...service, id: String(services.length + 1) };
 
-            adicionarServiço(service);
+            fetch('http://localhost:5000/services', {
 
-            setMessage('Serviço Cadastrado');
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updateService)
+            })
+                .then(response => response.json())
+                .then(() => {
 
-            newService(e);
+                    setMessage('Serviço Cadastrado');
+                    newService(e);
+
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar serviços:', error);
+                    setMessage('Erro ao cadastrar serviço');
+
+                });
 
         }
 
         else {
 
-            editarServiço(service.id, service);
+            fetch(`http://localhost:5000/services/${String(service.id)}`, {
 
-            setMessage('Serviço Salvo');
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(service)
+            })
+                .then(response => response.json())
+                .then(() => {
 
-            newService(e);
+                    setMessage('Serviço Salvo');
+                    newService(e);
+
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar serviços:', error);
+                    setMessage('Erro ao cadastrar serviço');
+
+                });
 
         }
     };
+
+    useEffect(() => {
+
+        fetch('http://localhost:5000/services', {
+
+
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setServices(data);
+            })
+            .catch(error => {
+                console.error('Erro ao buscar serviços:', error);
+            });
+    }, [service]);
+
 
     return (
 
@@ -104,17 +191,31 @@ function Service() {
                 <h2>Serviços</h2>
                 <div className={Style.Cards}>
 
-                    {dataBase.services.map((service) => (
 
-                        <div className={Style.Card}>
+                    {services?.length == 0 ? (
 
-                            <Card service={service} />
-                            <Pencil className={Style.pencil} onClick={() => { setService(service) }} />
+                        <div className={Style.nenhumServico}>
+
+                            <Code />
+                            <h3>Nenhum serviço cadastrado</h3>
 
                         </div>
 
-                    ))
-                    }
+                    ) : (
+
+                        services?.map((service) => (
+
+                            <div className={Style.Card} key={service.id}>
+
+                                <Card service={service} />
+                                <Pencil className={Style.pencil} onClick={() => { setService(service) }} />
+
+                            </div>
+
+                        ))
+
+
+                    )}
                 </div>
 
             </div>
@@ -127,10 +228,11 @@ function Service() {
 
                         <p>Serviço:</p>
                         <input
-                            name='name'
-                            value={service.name}
+                            name='label'
+                            value={service.label || ''}
                             onChange={(e) => { handleService(e) }}
-                            className={Style.inputService}
+                            className={Style.alingText}
+
                         />
 
                     </div>
@@ -139,21 +241,20 @@ function Service() {
                         <p>Quantidade:</p>
                         <input
                             name='quantity'
-                            value={service.quantity}
+                            value={service.quantity || ''}
                             onChange={(e) => { handleService(e) }}
                             className={Style.alingText}
                         />
 
                     </div>
-                    <div>
+                    <div className={Style.description}>
 
-                        <p>Rótulo:</p>
-                        <input
-                            name='label'
-                            value={service.label}
+                        <p>Descrição:</p>
+                        <textarea
+                            name='name'
+                            value={service.name || ''}
                             onChange={(e) => { handleService(e) }}
-                            className={Style.alingText}
-
+                            className={Style.inputService}
                         />
 
                     </div>
@@ -210,7 +311,7 @@ function Service() {
 
         </ConteinerForm>
 
-    )
+    );
 
 };
 

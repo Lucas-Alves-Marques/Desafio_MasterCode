@@ -24,3 +24,15 @@
     font-size: 14px;
 }
 
+.nenhumCurso {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap:1rem
+}
+
+.nenhumCurso svg {
+    height: 5rem;
+    width: 5rem;
+}

@@ -1,18 +1,14 @@
 import Style from './User.module.css';
-import { useNavigate } from 'react-router-dom';
-import { useDatabase } from '../../../DataBase/DataBase';
 import { IoPencil as Pencil } from "react-icons/io5";
 import { IoEyeSharp as Eyes } from "react-icons/io5";
 import { FaEyeSlash as EyesClosed } from "react-icons/fa";
 import Card from './Card/Card';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ConteinerForm from '../Conteiner/ConteinerForm';
 
 function User() {
 
-    const navigate = useNavigate();
-
-    const { dataBase, adicionarUsuario, editarUsuario, removerUsuario } = useDatabase();
+    const [users, setUsers] = useState();
 
     const [user, setUser] = useState({
 
@@ -40,7 +36,7 @@ function User() {
 
     };
 
-    const newUser = (e) => {
+    const clearUser = (e) => {
 
         e.preventDefault();
 
@@ -74,24 +70,105 @@ function User() {
 
         e.preventDefault();
 
-        if (user.id == null) {
+        try {
 
-            adicionarUsuario(user);
+            if (user.name == '' || user.password == '') {
 
-            setMessage('Usuário Cadastrado');
+                setMessage('Preencha todos os campos');
 
-            newUser();
+                return;
 
+            };
+
+            if (user.id == null) {
+
+                const newUser = { ...user, id: users?.length + 1 };
+
+                if (!newUser.quantityCourses || newUser.quantityCourses.trim() == '') {
+
+                    newUser.quantityCourses = 0;
+
+                };
+
+                if (!newUser.shopping || newUser.shopping.trim() == '') {
+
+                    newUser.shopping = 0;
+
+                };
+
+                fetch('http://localhost:5000/users', {
+
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newUser),
+                })
+                    .then((res) => res.json())
+                    .then(() => {
+
+                        setMessage('Usuário Cadastrado');
+
+                    })
+                    .catch((err) => console.log(err))
+
+
+            }
+
+            else {
+
+                if (!user.quantityCourses || user.quantityCourses.trim() == '') {
+
+                    user.quantityCourses = 0;
+
+                };
+
+                if (!user.shopping || user.shopping.trim() == '') {
+
+                    user.shopping = 0;
+
+                };
+
+                fetch(`http://localhost:5000/users/${String(user.id)}`, {
+
+                    method: 'PUT',
+                    headers: {
+
+                        'Content-Type': 'application/json',
+
+                    },
+                    body: JSON.stringify(user)
+                })
+                    .then((res) => {
+
+                        if (!res.ok) {
+                            throw new Error(`${res.status} => ${res.statusText}`);
+                        }
+
+
+                        return res.json()
+                    })
+                    .then(() => {
+
+                        setMessage('Usuário Salvo');
+
+                    })
+                    .catch((err) => console.log(err))
+
+                // editarUsuario(user.id, user);
+
+            };
+
+            clearUser(e);
+
+        } catch (error) {
+
+            console.log(error)
+
+            setMessage('Erro ao salvar usuário');
         }
 
-        else {
 
-            editarUsuario(user.id, user);
-
-            setMessage('Usuário Salvo');
-
-            newUser(e);
-        }
     };
 
     const confirmDel = (e) => {
@@ -106,13 +183,73 @@ function User() {
 
         e.preventDefault();
 
-        setMessage('')
+        if(users.length == 1 ) {
 
-        removerUsuario(user.id);
+          setMessage('É necessário ter pelo menos um usuário cadastrado')   
 
-        newUser(e);
+          return;
+          
+        }
+
+        try {
+
+            fetch(`http://localhost:5000/users/${String(user.id)}`, {
+
+                method: 'DELETE',
+                headers: {
+
+                    'Content-Type': 'application/json',
+
+                },
+            })
+                .then((res) => {
+
+                    if (!res.ok) {
+                        throw new Error(`${res.status} => ${res.statusText}`);
+                    }
+
+
+                    return res.json()
+                })
+                .then(() => {
+
+                    setMessage('Usuário excluído');
+
+                })
+                .catch((err) => console.log(err))
+
+            clearUser(e);
+
+        } catch (error) {
+
+            console.log(error)
+
+            setMessage('Erro ao excluir usuário');
+
+        }
 
     };
+
+    useEffect(() => {
+
+        fetch('http://localhost:5000/users', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+
+                setUsers(data)
+
+            }).catch((err) => {
+
+                console.log(err)
+
+            })
+
+    }, [user])
 
     return (
 
@@ -123,9 +260,9 @@ function User() {
                 <h2>Usuários</h2>
                 <div className={Style.Cards}>
 
-                    {dataBase.users.map((user) => (
+                    {users?.map((user) => (
 
-                        <div className={Style.Card}>
+                        <div className={Style.Card} key={user.id}>
 
                             <Card user={user} />
                             <Pencil className={Style.pencil} onClick={() => { setUser(user) }} />
@@ -148,7 +285,7 @@ function User() {
                         <input
                             name='name'
                             placeholder='Usuário1'
-                            value={user.name}
+                            value={user.name || ''}
                             onChange={(e) => { handleUser(e) }}
                         />
 
@@ -166,7 +303,7 @@ function User() {
                         <input
                             name='password'
                             type={typePassword}
-                            value={user.password}
+                            value={user.password || ''}
                             onChange={(e) => { handleUser(e) }}
                         />
 
@@ -177,7 +314,7 @@ function User() {
                         <input
                             name='quantityCourses'
                             placeholder='1'
-                            value={user.quantityCourses}
+                            value={user.quantityCourses || ''}
                             className={Style.alingText}
                             onChange={(e) => { handleUser(e) }}
                         />
@@ -190,7 +327,7 @@ function User() {
                             name='shopping'
                             placeholder='1'
                             className={Style.alingText}
-                            value={user.shopping}
+                            value={user.shopping || ''}
                             onChange={(e) => { handleUser(e) }}
                         />
 
@@ -221,13 +358,12 @@ function User() {
 
                     </div>
 
-
                 }
                 <div className={Style.btns}>
 
                     {user.id &&
 
-                        <button onClick={(e) => { newUser(e) }}>Novo Usuário</button>
+                        <button onClick={(e) => { clearUser(e) }}>Novo Usuário</button>
 
                     }
 

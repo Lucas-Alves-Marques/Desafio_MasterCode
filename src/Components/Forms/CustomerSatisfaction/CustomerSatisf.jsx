@@ -1,14 +1,11 @@
 import Style from '../CustomerSatisfaction/CustomerSatisf.module.css';
 import ConteinerForm from '../Conteiner/ConteinerForm';
-import { useDatabase } from '../../../DataBase/DataBase';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function CustomerSatisf() {
 
-    const { dataBase, updateCustomerSat } = useDatabase();
-
-    const [data, setData] = useState([]);
+    const [satisfaction, setSatisfaction] = useState([]);
 
     const [message, setMessage] = useState('');
 
@@ -16,7 +13,7 @@ function CustomerSatisf() {
 
     const handleValue = (e) => {
 
-        const updateData = data.map((field) => {
+        const updateData = satisfaction.map((field) => {
 
             if (field.category == e.target.name) {
 
@@ -27,23 +24,63 @@ function CustomerSatisf() {
 
         });
 
-        setData(updateData);
+        setSatisfaction(updateData);
 
     };
 
-    const saveForm = (e) => {
+    const saveForm = async (e) => {
 
         e.preventDefault();
 
-        setMessage('Atualização Realizada');
+        satisfaction.forEach(item => {
 
-        updateCustomerSat(data);
+            if (item.response === '') {
+
+                item.response = 0;
+            }
+        });
+
+        try {
+
+            const updatePromises = satisfaction.map(item =>
+
+                fetch(`http://localhost:5000/satisfaction/${item.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(item)
+                })
+                
+            );
+
+            await Promise.all(updatePromises);
+
+            setMessage('Atualização Realizada');
+
+        } catch (error) {
+            console.error('Erro ao atualizar as satisfações:', error);
+            setMessage('Erro ao atualizar as satisfações');
+        }
 
     };
 
     useEffect(() => {
 
-        setData(dataBase?.satisfaction);
+        fetch('http://localhost:5000/satisfaction', {
+
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setSatisfaction(data);
+            })
+            .catch(error => {
+                console.error('Erro ao buscar satisfação:', error);
+            });
 
     }, []);
 
@@ -56,7 +93,7 @@ function CustomerSatisf() {
                 <h2>Nível de Satisfação</h2>
                 <form onSubmit={(e) => { saveForm(e) }}>
 
-                    {data.map((field) => (
+                    {satisfaction.map((field) => (
 
                         <div key={field.category} className={Style.field}>
 

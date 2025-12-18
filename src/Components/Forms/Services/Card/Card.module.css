@@ -4,7 +4,7 @@
     border-radius: 10px;
     display: flex;
     align-items: center;
-    width: 25rem;
+    width: 30rem;
 }
 
 .cardService {
@@ -27,9 +27,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 6rem;
 }
 
 .infoService li {
     list-style: none;
+    line-height: 2rem;
+}
+
+.infoService li span {
+    font-weight: bold;
 }

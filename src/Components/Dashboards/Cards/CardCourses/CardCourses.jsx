@@ -1,72 +1,122 @@
 import Style from '../CardCourses/CardCourses.module.css';
 import Card from '../Cards';
-import { Chart } from 'chart.js/auto';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import { useEffect, useState } from 'react';
+ChartJS.register(ArcElement, Tooltip, Legend);
+import { GiDiploma as Diploma } from "react-icons/gi";
 
-function CardCourses({ dataCorses }) {
+function CardCourses() {
+
+    const [corses, setCorses] = useState([]);
+
+    useEffect(() => {
+
+        fetch('http://localhost:5000/courses',
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        )
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao enviar dados');
+                }
+                return response.json();
+            })
+            .then(data => {
+
+                setCorses(data);
+
+            })
+            .catch(error => {
+
+                console.log(error);
+
+            })
+
+    }, [])
 
     return (
 
         <Card title={'Cursos e Formações'} url={'/edit/courses'}>
 
-            <ul className={Style.list}>
+            {corses.length > 0 ? (
 
-                {dataCorses?.map((course) => (
+                <>
+                
+                    <ul className={Style.list}>
 
-                    <li key={course.course}>{course.course}</li>
+                        {corses?.map((course) => (
 
-                ))}
+                            <li key={course.course}>{course.course}</li>
 
-            </ul>
-            <div>
+                        ))}
 
-                <Doughnut
-                    data={{
+                    </ul>
+                    <div>
 
-                        labels: dataCorses?.map((course) => (course.label)),
-                        datasets: [{
+                        <Doughnut
+                            data={{
 
-                            label: 'Cursos Vendidos',
-                            data: dataCorses?.map((course) => (course.sales)),
-                            backgroundColor: [
+                                labels: corses?.map((course) => (course.label)),
+                                datasets: [{
 
-                                'rgb(0, 200, 0)',
-                                'rgb(0, 160, 0)',
-                                'rgb(0, 120, 0)',
-                                'rgb(0, 80, 0)',
+                                    label: 'Cursos Vendidos',
+                                    data: corses?.map((course) => (course.sales)),
+                                    backgroundColor: [
 
-                            ],
-                        }]
-                    }}
-                    options={{
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                                labels: {
-                                    align: 'center',
-                                    font: {
-                                        size: 12,
+                                        'rgb(0, 200, 0)',
+                                        'rgb(0, 160, 0)',
+                                        'rgb(0, 120, 0)',
+                                        'rgb(0, 80, 0)',
+
+                                    ],
+                                }]
+                            }}
+                            options={{
+                                plugins: {
+                                    legend: {
+                                        position: 'top',
+                                        labels: {
+                                            align: 'center',
+                                            font: {
+                                                size: 12,
+                                            },
+                                            padding: 10,
+                                            color: 'rgb(0, 247, 0)'
+                                        }
                                     },
-                                    padding: 10,
-                                    color: 'rgb(0, 247, 0)'
-                                }
-                            },
-                            tooltip: {
-                                enabled: true,
-                                backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                                titleFont: { size: 13 },
-                                bodyFont: { size: 12 },
-                            }
+                                    tooltip: {
+                                        enabled: true,
+                                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                                        titleFont: { size: 13 },
+                                        bodyFont: { size: 12 },
+                                    }
 
-                        },
+                                },
 
-                        responsive: true,
-                        maintainAspectRatio: false
-                    }}
+                                responsive: true,
+                                maintainAspectRatio: false
+                            }}
 
-                />
+                        />
 
-            </div>
+                    </div>
+
+                </>
+
+            ) : (
+
+                <div className={Style.nenhumCurso}>
+
+                    <Diploma />
+                    <h3>Nenhum curso cadastrado</h3>
+
+                </div>
+            )}
 
         </Card>
 

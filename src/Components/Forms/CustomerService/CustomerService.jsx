@@ -1,5 +1,4 @@
 import Style from './CustomerService.module.css';
-import { useDatabase } from '../../../DataBase/DataBase';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ConteinerForm from '../Conteiner/ConteinerForm';
@@ -8,15 +7,13 @@ function CustomerService() {
 
     const navigate = useNavigate();
 
-    const { dataBase, updateCustomerSer } = useDatabase();
-
-    const [data, setData] = useState([]);
+    const [customerService, setCustomerService] = useState([]);
 
     const [message, setMessage] = useState('');
 
     const handleValue = (e) => {
 
-        const updateData = data.map((field) => {
+        const updateData = customerService.map((field) => {
 
             if (field.category == e.target.name) {
 
@@ -27,23 +24,64 @@ function CustomerService() {
 
         });
 
-        setData(updateData);
+        setCustomerService(updateData);
 
     };
 
-    const saveForm = (e) => {
+    const saveForm = async (e) => {
 
         e.preventDefault();
 
-        setMessage('Atualização Realizada');
+        customerService.forEach(item => {
 
-        updateCustomerSer(data);
+            if (item.response === '') {
+
+                item.response = 0;
+            }
+        });
+
+        try {
+
+            const updatePromises = customerService.map(item =>
+
+                fetch(`http://localhost:5000/customerService/${item.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(item)
+                })
+
+            );
+
+            await Promise.all(updatePromises);
+
+            setMessage('Atualização Realizada');
+
+        } catch (error) {
+            console.error('Erro ao atualizar os niveis de atendimento:', error);
+            setMessage('Erro ao atualizar os niveis de atendimento');
+        }
 
     };
 
     useEffect(() => {
 
-        setData(dataBase?.customerService);
+        fetch('http://localhost:5000/customerService', {
+
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+
+                setCustomerService(data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
     }, []);
 
@@ -56,7 +94,7 @@ function CustomerService() {
                 <h2>Nível de Atendimento</h2>
                 <form onSubmit={(e) => { saveForm(e) }}>
 
-                    {data.map((field) => (
+                    {customerService.map((field) => (
 
                         <div key={field.category} className={Style.field}>
 
@@ -94,6 +132,7 @@ function CustomerService() {
             }
 
         </ConteinerForm>
+
     );
 
 }

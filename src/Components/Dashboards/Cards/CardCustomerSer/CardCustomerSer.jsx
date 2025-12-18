@@ -1,20 +1,68 @@
 import { useEffect, useState } from 'react';
 import Style from '../CardCustomerSer/CardCustomerSer.module.css';
 import Card from '../Cards';
-import { Chart } from 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend
+} from 'chart.js';
 
-function CardCustomerSer({ dataCustomer }) {
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+function CardCustomerSer() {
+
+    const [dataCustomer, setDataCustomer] = useState(null);
 
     const [totalService, setTotalService] = useState(null);
 
     useEffect(() => {
 
-        const totalSum = dataCustomer?.reduce((acc, customer) => acc + parseInt(customer.response), 0);
+        fetch('http://localhost:5000/customerService',
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        )
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao enviar dados');
+                }
+                return response.json();
+            })
+            .then(data => {
 
-        setTotalService(totalSum);
+                setDataCustomer(data);
 
-    }, [dataCustomer]);
+                const totalSum = data?.reduce((acc, customer) => acc + parseInt(customer.response), 0);
+
+                setTotalService(totalSum);
+
+            })
+            .catch(error => {
+
+                console.log(error);
+
+            })
+
+
+
+    }, []);
 
     return (
 
@@ -47,9 +95,9 @@ function CardCustomerSer({ dataCustomer }) {
                     }}
                     options={{
                         responsive: true,
-                        maintainAspectRatio: false, 
+                        maintainAspectRatio: false,
                         layout: {
-                            padding: 10 
+                            padding: 10
                         },
                         scales: {
                             x: {

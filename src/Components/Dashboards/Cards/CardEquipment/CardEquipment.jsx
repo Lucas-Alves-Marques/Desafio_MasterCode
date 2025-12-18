@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import Style from '../CardEquipment/CardEquipment.module.css';
 import Card from '../Cards';
-import { Chart } from 'chart.js/auto';
 import { Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
-function CardEquipment({ dataEquipment }) {
+ChartJS.register(ArcElement, Tooltip, Legend);
+
+function CardEquipment() {
+
+    const [equipments, setEquipments] = useState(null);
 
     const [totalEquip, setTotalEquip] = useState(null);
 
@@ -12,19 +16,44 @@ function CardEquipment({ dataEquipment }) {
 
     useEffect(() => {
 
-        const totalSum = dataEquipment?.reduce((acc, customer) => acc + customer.quantity, 0);
+        fetch('http://localhost:5000/equipment',
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        )
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao enviar dados');
+                }
+                return response.json();
+            })
+            .then(data => {
 
-        setTotalEquip(totalSum);
+                setEquipments(data);
 
-        const stockStatus = dataEquipment?.reduce((stock, item) => {
+                const totalSum = data?.reduce((acc, customer) => acc + customer.quantity, 0);
 
-            return item.quantity > stock.quantity ? item : stock;
+                setTotalEquip(totalSum);
 
-        });
+                const stockStatus = data?.reduce((stock, item) => {
 
-        setStatus(stockStatus?.category);
+                    return item.quantity > stock.quantity ? item : stock;
 
-    }, [dataEquipment])
+                });
+
+                setStatus(stockStatus?.category);
+
+            })
+            .catch(error => {
+
+                console.log(error);
+
+            })
+
+    }, [])
 
     return (
 
@@ -45,7 +74,7 @@ function CardEquipment({ dataEquipment }) {
                         datasets: [{
 
                             label: 'Quantidade',
-                            data: dataEquipment?.map((equip) => (equip.quantity)),
+                            data: equipments?.map((equip) => (equip.quantity)),
                             backgroundColor: [
 
                                 'rgb(200, 0, 0)',

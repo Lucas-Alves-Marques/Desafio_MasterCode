@@ -1,8 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { DatabaseProvider } from './DataBase/DataBase';
 import Login from './Components/Login/Login.jsx';
 import Main from "./Components/Main/Main.jsx";
-import Contacts from "./Components/Contacts/Contacts.jsx";
 import DashBoards from "./Components/Dashboards/Dashboards.jsx";
 import User from "./Components/Forms/User/User.jsx";
 import CustomerService from "./Components/Forms/CustomerService/CustomerService.jsx";
@@ -15,7 +13,6 @@ function App() {
 
   return (
 
-    <DatabaseProvider>
 
       <BrowserRouter>
 
@@ -23,7 +20,6 @@ function App() {
 
           <Route path="/" element={<Login />} />
           <Route path="/main" element={<Main />} />
-          <Route path="/contacts" element={<Contacts />} />
           <Route path="/dashboards" element={<DashBoards />} />
           <Route path="/edit/users" element={<User />} />
           <Route path="/edit/customerser" element={<CustomerService />} />
@@ -35,8 +31,6 @@ function App() {
         </Routes>
 
       </BrowserRouter>
-
-    </DatabaseProvider>
 
   )
 }

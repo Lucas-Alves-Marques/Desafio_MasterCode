@@ -1,28 +1,56 @@
 import { useEffect, useState } from 'react';
 import Style from '../CardCustomerSat/CardCustomerSat.module.css';
 import Card from '../Cards';
-import { Chart } from 'chart.js/auto';
 import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+ChartJS.register(ArcElement, Tooltip, Legend);
 
-function CardCustomerSat({ dataCustomer }) {
+function CardCustomerSat() {
+
+    const [dataCustomer, setDataCustomer] = useState(null);
 
     const [satisfaction, setSatisfation] = useState([]);
 
     useEffect(() => {
 
-        const totalSum = dataCustomer?.reduce((acc, customer) => acc + customer.response, 0);
+        fetch('http://localhost:5000/satisfaction',
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        )
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao enviar dados');
+                }
+                return response.json();
+            })
+            .then(data => {
 
-        const results = dataCustomer?.map((cust) => {
+                const totalSum = data?.reduce((acc, customer) => acc + customer.response, 0);
 
-            const percentage = (parseFloat(cust.response) / totalSum) * 100;
+                const results = data?.map((cust) => {
 
-            return percentage.toFixed(2);
+                    const percentage = (parseFloat(cust.response) / totalSum) * 100;
 
-        });
+                    return isNaN(percentage) ? 0 : percentage.toFixed(2);
 
-        setSatisfation(results);
+                });
 
-    }, [dataCustomer]);
+                setSatisfation(results);
+
+                setDataCustomer(data);
+
+            })
+            .catch(error => {
+
+                console.log(error);
+
+            })
+
+    }, []);
 
     return (
 
